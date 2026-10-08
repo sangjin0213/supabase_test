@@ -1,0 +1,308 @@
+/* =========================================
+   바이브 카페 주문서 스타일
+   ========================================= */
+
+/* ---------- 색상 변수 ---------- */
+:root {
+  --beige: #faf6f0;        /* 배경 베이지 */
+  --brown: #6b4226;        /* 메인 브라운 */
+  --brown-light: #8a5a3a;  /* hover용 밝은 브라운 */
+  --brown-soft: rgba(107, 66, 38, 0.18); /* 포커스 그림자용 연한 갈색 */
+  --line: #e4d8ca;         /* 테두리 색 */
+  --text: #3b2a1e;         /* 기본 글자색 */
+  --text-sub: #8c7a6b;     /* 보조 글자색 */
+  --success-bg: #e8f7d9;   /* 주문 확인 배경 (연두색) */
+  --success-text: #2e7d32; /* 주문 확인 글자 (초록) */
+}
+
+/* ---------- 기본 초기화 ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 32px 16px;
+  background: var(--beige);
+  color: var(--text);
+  font-family: '맑은 고딕', 'Malgun Gothic', sans-serif;
+  line-height: 1.5;
+}
+
+/* 입력 요소도 페이지 폰트를 그대로 사용 */
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: 16px; /* 16px 미만이면 아이폰에서 자동 확대되므로 16px 유지 */
+}
+
+/* ---------- 페이지 상단 (로고, 카페 이름, 부제) ---------- */
+.header {
+  max-width: 520px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.cafe-name {
+  margin: 12px 0 4px;
+  color: var(--brown);
+  font-size: 32px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-sub);
+}
+
+/* ---------- 주문서 카드 ---------- */
+main {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+#order-form {
+  background: #fff;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(107, 66, 38, 0.1);
+}
+
+/* 각 항목 묶음 */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* 항목 제목 (일반 label, fieldset의 legend) */
+.form-group > label,
+.form-group legend {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: var(--brown);
+}
+
+/* ---------- 입력칸 ---------- */
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* 포커스 시 갈색 테두리 + 연한 갈색 그림자 */
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--brown);
+  box-shadow: 0 0 0 3px var(--brown-soft);
+}
+
+/* ---------- 라디오 / 체크박스 (가로 배치) ---------- */
+fieldset.form-group {
+  border: none;
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;   /* 좁은 화면에서는 다음 줄로 넘어감 */
+  gap: 8px;
+}
+
+/* 실제 동그라미/네모는 화면에서만 숨기고, 키보드·스크린리더로는 계속 사용 가능 */
+fieldset.form-group input[type="radio"],
+fieldset.form-group input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+/* 선택지를 둥근 버튼 모양으로 표시 */
+fieldset.form-group label {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--beige);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+fieldset.form-group label:hover {
+  border-color: var(--brown-light);
+}
+
+/* 선택된 항목은 갈색으로 채움 */
+fieldset.form-group input:checked + label {
+  background: var(--brown);
+  border-color: var(--brown);
+  color: #fff;
+}
+
+/* 키보드로 이동했을 때 포커스 표시 */
+fieldset.form-group input:focus-visible + label {
+  box-shadow: 0 0 0 3px var(--brown-soft);
+}
+
+/* ---------- 예상 금액 ---------- */
+.total-price {
+  margin: 24px 0 16px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--brown);
+  text-align: center;
+}
+
+/* ---------- 버튼 ---------- */
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* 주문하기 버튼: 갈색 배경 + 흰 글씨 */
+#order-button {
+  flex: 2; /* 주문하기 버튼을 더 넓게 */
+  border: 1px solid var(--brown);
+  background: var(--brown);
+  color: #fff;
+  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+/* 호버 시 살짝 떠오르는 효과 */
+#order-button:hover {
+  background: var(--brown-light);
+  border-color: var(--brown-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(107, 66, 38, 0.25);
+}
+
+/* 클릭하는 순간에는 다시 내려앉음 */
+#order-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(107, 66, 38, 0.2);
+}
+
+/* 다시 작성 버튼: 흰 배경 + 갈색 테두리 */
+#reset-button {
+  border: 1px solid var(--brown);
+  background: #fff;
+  color: var(--brown);
+}
+
+#reset-button:hover {
+  background: var(--beige);
+}
+
+/* ---------- 주문 확인 메시지 ---------- */
+.order-result {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--success-bg);
+  color: var(--success-text);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+}
+
+/* ---------- 입력 오류 시 좌우 흔들림 ---------- */
+/* script.js가 잘못 입력한 칸에 shake 클래스를 붙이면 실행됨 */
+.shake {
+  animation: shake 0.4s ease-in-out;
+  border-color: #c0392b !important; /* 흔들리는 동안 빨간 테두리로 강조 */
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(5px); }
+}
+
+/* ---------- 하단 알림창 (토스트) ---------- */
+/* script.js가 만들어 붙이는 알림창. 평소에는 화면 아래로 숨어 있음 */
+.toast {
+  position: fixed;          /* 스크롤해도 항상 화면 같은 위치에 고정 */
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px); /* 가운데 정렬 + 살짝 아래에서 대기 */
+  max-width: calc(100% - 32px);     /* 휴대폰에서도 좌우 16px 여백 확보 */
+  padding: 14px 24px;
+  background: #000;         /* 단색 검은 배경 */
+  color: #fff;              /* 하얀 글씨 */
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;     /* 숨어 있을 때 클릭을 가로막지 않도록 */
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  z-index: 1000;            /* 다른 요소보다 위에 표시 */
+}
+
+/* show 클래스가 붙으면 위로 올라오며 나타남 */
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- 숨김 처리 ---------- */
+/* hidden 클래스 또는 hidden 속성이 붙으면 화면에서 숨김 */
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- 휴대폰 화면 ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 16px;
+  }
+
+  .logo {
+    font-size: 52px;
+  }
+
+  .cafe-name {
+    font-size: 26px;
+  }
+
+  #order-form {
+    padding: 20px 16px;
+  }
+
+  /* 버튼을 세로로 쌓기 */
+  .button-group {
+    flex-direction: column;
+  }
+}
